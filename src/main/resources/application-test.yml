@@ -10,4 +10,12 @@ spring:
 
 logging:
   level:
-    root: DEBUG
+    root: ERROR
+
+auth:
+  jwt:
+    secret: jwt-secret-test
+    expiration: 1000
+
+api:
+  key: api-key-test

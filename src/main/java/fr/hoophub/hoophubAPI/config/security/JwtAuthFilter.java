@@ -45,14 +45,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         final String authHeader = request.getHeader("Authorization");
+        final String apiKeyHeader = request.getHeader("API-Key");
         if(authHeader == null && !authHeader.startsWith(BEARER)){
-            filterChain.doFilter(request, response);
-            return;
-        }
-        final String apiKeyHeader = request.getHeader("apiKey");
-        if(apiKeyHeader == null || !apiKeyHeader.equals(apiKey)){
-            filterChain.doFilter(request, response);
-            return;
+            if(apiKeyHeader == null || !apiKeyHeader.equals(apiKey)){
+                filterChain.doFilter(request, response);
+                return;
+            }
         }
         try {
             final String jwtToken = authHeader.substring(BEARER.length());
