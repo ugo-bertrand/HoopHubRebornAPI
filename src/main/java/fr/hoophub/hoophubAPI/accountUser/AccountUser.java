@@ -1,9 +1,6 @@
 package fr.hoophub.hoophubAPI.accountUser;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -26,20 +23,28 @@ public class AccountUser implements UserDetails {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @Column(unique = true, nullable = false)
     private String username;
 
+    @Column(unique = true, nullable = false)
     private String email;
 
+    @Column(nullable = false)
     private String phone;
 
+    @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
     private String firstname;
 
+    @Column(nullable = false)
     private String lastname;
 
+    @Column(nullable = false)
     private LocalDateTime createdAt;
 
+    @Column()
     private LocalDateTime updatedAt;
 
     @Override

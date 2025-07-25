@@ -7,6 +7,7 @@ import fr.hoophub.hoophubAPI.common.BaseException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,10 +22,13 @@ public class AccountUserServiceImpl implements AccountUserService{
 
     private final AccountUserRepository accountUserRepository;
 
+    private final PasswordEncoder passwordEncoder;
+
 
     @Override
     public AccountUser createAccountUser(CreateAccountUser createAccountUser) {
         AccountUser accountUser = CreateAccountMapper.INSTANCE.toDto(createAccountUser);
+        accountUser.setPassword(passwordEncoder.encode(accountUser.getPassword()));
         log.info("Result of the mapping of the accountUser with createAccountUser: {}", accountUser);
         return accountUserRepository.save(accountUser);
     }
@@ -42,19 +46,22 @@ public class AccountUserServiceImpl implements AccountUserService{
             accountUserOptional.get().setLastname(updateAccountUser.getLastname());
         }
         if(updateAccountUser.getUsername().isEmpty()){
-            // check if the username is not already use
+            if(accountUserRepository.findByUsername(updateAccountUser.getUsername()).isPresent()){
+                throw new BaseException("The username specified is already used", HttpStatus.BAD_REQUEST);
+            }
             accountUserOptional.get().setUsername(updateAccountUser.getUsername());
         }
         if(updateAccountUser.getEmail().isEmpty()){
-            // check if the email is not already use
+            if(accountUserRepository.findByEmail(updateAccountUser.getEmail()).isPresent()){
+                throw new BaseException("The email specified is already used",HttpStatus.BAD_GATEWAY);
+            }
             accountUserOptional.get().setEmail(updateAccountUser.getEmail());
         }
         if(updateAccountUser.getPhone().isEmpty()){
             accountUserOptional.get().setPhone(updateAccountUser.getPhone());
         }
         if(updateAccountUser.getPassword().isEmpty()){
-            // add encryption to the password
-            accountUserOptional.get().setPassword(updateAccountUser.getPassword());
+            accountUserOptional.get().setPassword(passwordEncoder.encode(updateAccountUser.getPassword()));
         }
         accountUserOptional.get().setUpdatedAt(LocalDateTime.now());
         return accountUserRepository.save(accountUserOptional.get());
