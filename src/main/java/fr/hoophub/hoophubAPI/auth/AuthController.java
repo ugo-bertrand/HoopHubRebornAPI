@@ -2,6 +2,8 @@ package fr.hoophub.hoophubAPI.auth;
 
 import fr.hoophub.hoophubAPI.accountUser.AccountUserService;
 import fr.hoophub.hoophubAPI.accountUser.dto.CreateAccountUser;
+import fr.hoophub.hoophubAPI.auth.dto.AuthenticationDto;
+import fr.hoophub.hoophubAPI.auth.dto.LoginForm;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,8 +20,15 @@ public class AuthController {
 
     private final AccountUserService accountUserService;
 
+    private final AuthService authService;
+
     @PostMapping("/createAccount")
-    public ResponseEntity<?> createUserAccount(@RequestBody @Valid CreateAccountUser accountUserBody) throws Exception{
+    public ResponseEntity<?> createUserAccount(@RequestBody @Valid CreateAccountUser accountUserBody){
         return new ResponseEntity<>(accountUserService.createAccountUser(accountUserBody),HttpStatus.CREATED);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<AuthenticationDto> login(@RequestBody @Valid LoginForm loginForm) throws Exception {
+        return new ResponseEntity<>(authService.login(loginForm),HttpStatus.OK);
     }
 }
