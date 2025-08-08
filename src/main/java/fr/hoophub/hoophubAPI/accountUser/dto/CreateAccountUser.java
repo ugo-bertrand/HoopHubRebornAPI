@@ -12,7 +12,7 @@ public class CreateAccountUser {
     private String username;
 
     @NotBlank(message = "The email is required to create an account")
-    @Pattern(regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+\\\\.[a-z]{2,3}", message = "The email must be valid with '@', '.' and a valid domain")
+    @Pattern(regexp = "[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,3}", message = "The email must be valid with '@', '.' and a valid domain")
     private String email;
 
     @NotBlank(message = "The password is required to create an account")
