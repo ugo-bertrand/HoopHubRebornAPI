@@ -75,7 +75,7 @@ public class AuthServiceTests {
     }
 
     @Test
-    void login_should_throw_not_found_error_because_the_user_does_not_exist() throws Exception {
+    void login_should_throw_not_found_error_because_the_user_does_not_exist() {
         LoginForm loginForm = LoginForm.builder().email("test@gmail.com").password("testPassword").build();
         AccountUser accountUser = AccountUser.builder().email("test@gmail.com").build();
 
