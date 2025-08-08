@@ -1,5 +1,6 @@
 package fr.hoophub.hoophubAPI.auth;
 
+import fr.hoophub.hoophubAPI.accountUser.AccountUser;
 import fr.hoophub.hoophubAPI.accountUser.AccountUserService;
 import fr.hoophub.hoophubAPI.accountUser.dto.CreateAccountUser;
 import fr.hoophub.hoophubAPI.auth.dto.AuthenticationDto;
@@ -23,7 +24,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/createAccount")
-    public ResponseEntity<?> createUserAccount(@RequestBody @Valid CreateAccountUser accountUserBody){
+    public ResponseEntity<AccountUser> createUserAccount(@RequestBody @Valid CreateAccountUser accountUserBody){
         return new ResponseEntity<>(accountUserService.createAccountUser(accountUserBody),HttpStatus.CREATED);
     }
 
