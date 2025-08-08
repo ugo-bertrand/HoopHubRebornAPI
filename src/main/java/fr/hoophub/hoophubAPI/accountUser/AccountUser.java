@@ -2,6 +2,7 @@ package fr.hoophub.hoophubAPI.accountUser;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +19,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity
 @Data
+@Builder
 public class AccountUser implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

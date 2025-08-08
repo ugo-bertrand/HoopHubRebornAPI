@@ -6,6 +6,7 @@ import fr.hoophub.hoophubAPI.auth.dto.AuthenticationDto;
 import fr.hoophub.hoophubAPI.auth.dto.LoginForm;
 import fr.hoophub.hoophubAPI.common.BaseException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,6 +18,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AuthServiceImpl implements AuthService{
 
     private final AuthenticationManager authenticationManager;

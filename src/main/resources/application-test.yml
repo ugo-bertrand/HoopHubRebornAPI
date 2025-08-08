@@ -5,12 +5,11 @@ spring:
     password:
   jpa:
     hibernate:
-      ddl-auto: create-drop
-    database-platform: org.hibernate.dialect.H2Dialect
+      ddl-auto: create
 
 logging:
   level:
-    root: ERROR
+    root: INFO
 
 auth:
   jwt:
